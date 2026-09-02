@@ -18,7 +18,7 @@ const EVENTS_DATA = [
   {
     id: 'event-01',
     title: 'AWS Community Launch Meetup & Orientation',
-    day: '15',
+    day: '7',
     month: 'SEP 2026',
     type: 'Community Meetup',
     status: 'upcoming',
@@ -27,42 +27,42 @@ const EVENTS_DATA = [
     time: '11:00 AM – 01:30 PM IST',
     location: 'Main Auditorium / Seminar Hall, GSMCOE Campus, Pune'
   },
-  {
-    id: 'event-02',
-    title: 'Hands-on Cloud Fundamentals & S3/EC2 Workshop',
-    day: '28',
-    month: 'SEP 2026',
-    type: 'Technical Workshop',
-    status: 'upcoming',
-    shortDesc: 'Step-by-step practical workshop on launching compute instances, configuring IAM roles, and serving static assets via Amazon S3.',
-    fullDesc: 'An interactive hands-on lab session for beginners and project builders. Participants will create free-tier AWS accounts, configure IAM security policies, deploy Linux virtual servers on EC2, and host static web applications using Amazon Simple Storage Service (S3).',
-    time: '02:00 PM – 05:00 PM IST',
-    location: 'Computer Engineering Lab 3, GSMCOE Pune'
-  },
-  {
-    id: 'event-03',
-    title: 'Build on AWS: Serverless & Generative AI Workshop',
-    day: '12',
-    month: 'OCT 2026',
-    type: 'Builder Session',
-    status: 'upcoming',
-    shortDesc: 'Explore AWS Lambda, Amazon Bedrock, and API Gateway to build real-world intelligent applications without managing servers.',
-    fullDesc: 'Dive into modern serverless architecture and Generative AI on AWS. Learn how to connect Amazon Bedrock LLMs with AWS Lambda functions and API Gateway to create serverless AI assistants and microservices.',
-    time: '10:30 AM – 03:30 PM IST',
-    location: 'Advanced Computing Center, GSMCOE Pune'
-  },
-  {
-    id: 'event-04',
-    title: 'AWS Cloud Practitioner & Developer Study Jam',
-    day: '05',
-    month: 'AUG 2026',
-    type: 'Study Session',
-    status: 'past',
-    shortDesc: 'Collaborative study group session breaking down domain objectives for AWS Certified Cloud Practitioner and Solutions Architect exams.',
-    fullDesc: 'A peer-led study session focused on AWS architectural best practices, core cloud services, pricing models, and hands-on practice exam questions.',
-    time: '01:00 PM – 04:00 PM IST',
-    location: 'Library Conference Room, GSMCOE Pune'
-  }
+  // {
+  //   id: 'event-02',
+  //   title: 'Hands-on Cloud Fundamentals & S3/EC2 Workshop',
+  //   day: '28',
+  //   month: 'SEP 2026',
+  //   type: 'Technical Workshop',
+  //   status: 'upcoming',
+  //   shortDesc: 'Step-by-step practical workshop on launching compute instances, configuring IAM roles, and serving static assets via Amazon S3.',
+  //   fullDesc: 'An interactive hands-on lab session for beginners and project builders. Participants will create free-tier AWS accounts, configure IAM security policies, deploy Linux virtual servers on EC2, and host static web applications using Amazon Simple Storage Service (S3).',
+  //   time: '02:00 PM – 05:00 PM IST',
+  //   location: 'Computer Engineering Lab 3, GSMCOE Pune'
+  // },
+  // {
+  //   id: 'event-03',
+  //   title: 'Build on AWS: Serverless & Generative AI Workshop',
+  //   day: '12',
+  //   month: 'OCT 2026',
+  //   type: 'Builder Session',
+  //   status: 'upcoming',
+  //   shortDesc: 'Explore AWS Lambda, Amazon Bedrock, and API Gateway to build real-world intelligent applications without managing servers.',
+  //   fullDesc: 'Dive into modern serverless architecture and Generative AI on AWS. Learn how to connect Amazon Bedrock LLMs with AWS Lambda functions and API Gateway to create serverless AI assistants and microservices.',
+  //   time: '10:30 AM – 03:30 PM IST',
+  //   location: 'Advanced Computing Center, GSMCOE Pune'
+  // },
+  // {
+  //   id: 'event-04',
+  //   title: 'AWS Cloud Practitioner & Developer Study Jam',
+  //   day: '05',
+  //   month: 'AUG 2026',
+  //   type: 'Study Session',
+  //   status: 'past',
+  //   shortDesc: 'Collaborative study group session breaking down domain objectives for AWS Certified Cloud Practitioner and Solutions Architect exams.',
+  //   fullDesc: 'A peer-led study session focused on AWS architectural best practices, core cloud services, pricing models, and hands-on practice exam questions.',
+  //   time: '01:00 PM – 04:00 PM IST',
+  //   location: 'Library Conference Room, GSMCOE Pune'
+  // }
 ];
 
 function initEventsSystem() {
