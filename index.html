@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>AWS Community — GSMCOE</title>
+  
+  <!-- SEO & Open Graph Meta Tags -->
+  <meta name="description" content="AWS Community at GSMCOE Pune — a student-driven community for learning, building, and exploring AWS, cloud computing, AI/ML, DevOps, and modern technology.">
+  <meta name="keywords" content="AWS, AWS Community, GSMCOE, Pune, Genba Sopanrao Moze College of Engineering, Cloud Computing, Student Community, AWS Builder">
+  <meta name="author" content="AWS Community GSMCOE">
+  
+  <meta property="og:title" content="AWS Community — GSMCOE">
+  <meta property="og:description" content="Learn. Build. Deploy. Grow. Student-driven AWS & Cloud Community at GSMCOE Pune.">
+  <meta property="og:image" content="assets/aws_gsmcoe_logo.jpeg">
+  <meta property="og:type" content="website">
+
+  <!-- Mobile PWA Meta Tags -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AWS GSMCOE">
+
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. Header / Navigation (FULL-SPREADED EDGE-TO-EDGE)
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="#home" class="brand" aria-label="AWS Community GSMCOE Home">
+        <img src="assets/aws_gsmcoe_logo.jpeg" alt="AWS Community GSMCOE Logo" class="brand-logo">
+        <div class="brand-text-group">
+          <span class="brand-text">AWS Community</span>
+          <span class="brand-subtitle">GSMCOE PUNE</span>
+        </div>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#what-we-do" class="nav-link">What We Do</a></li>
+          <li><a href="#events" class="nav-link">Events</a></li>
+          <li><a href="#community" class="nav-link">Community</a></li>
+          <li><a href="#resources" class="nav-link">Resources</a></li>
+          <li><a href="#socials" class="nav-link">Socials</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <!-- Official Builder Form Link -->
+        <a href="https://forms.gle/fSu3Z82uj4r4wkHD7" target="_blank" rel="noopener noreferrer" class="header-cta-btn">Become a Member</a>
+      </nav>
+
+      <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav-drawer">MENU</button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Mobile Navigation">
+    <div class="mobile-nav-header">
+      <span class="mobile-nav-title">AWS COMMUNITY GSMCOE</span>
+    </div>
+    
+    <ul class="mobile-nav-links">
+      <li><a href="#home" class="mobile-nav-link">Home</a></li>
+      <li><a href="#about" class="mobile-nav-link">About Us</a></li>
+      <li><a href="#what-we-do" class="mobile-nav-link">What We Do</a></li>
+      <li><a href="#events" class="mobile-nav-link">Events & Workshops</a></li>
+      <li><a href="#community" class="mobile-nav-link">Who Can Join</a></li>
+      <li><a href="#resources" class="mobile-nav-link">AWS Resources</a></li>
+      <li><a href="#socials" class="mobile-nav-link">Social Channels</a></li>
+      <li><a href="#contact" class="mobile-nav-link">Contact & Location</a></li>
+    </ul>
+
+    <div class="mobile-nav-footer">
+      <!-- Official Builder Form Link -->
+      <a href="https://forms.gle/fSu3Z82uj4r4wkHD7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large mobile-cta-full">Become an AWS Builder Member →</a>
+    </div>
+  </div>
+
+  <!-- Floating Mobile PWA Install Bar -->
+  <div id="pwa-install-banner" class="pwa-banner" style="display: none;">
+    <div class="pwa-banner-content">
+      <img src="assets/aws_gsmcoe_logo.jpeg" alt="Logo" class="pwa-banner-icon">
+      <div>
+        <strong>AWS Community GSMCOE App</strong>
+        <p>Install on your home screen for fast offline access.</p>
+      </div>
+    </div>
+    <div class="pwa-banner-actions">
+      <button id="pwa-banner-install-btn" class="btn btn-primary btn-sm">Install</button>
+      <button id="pwa-banner-close-btn" class="pwa-close-btn" aria-label="Close install prompt">✕</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- ==========================================================================
+         2. Hero Section
+         ========================================================================== -->
+    <section id="home" class="section hero-section">
+      <div class="container">
+        <div class="hero-header">
+          <div class="hero-eyebrow">Genba Sopanrao Moze College of Engineering (GSMCOE), Pune</div>
+          <h1 class="hero-title">AWS Community<br>GSMCOE</h1>
+        </div>
+
+        <div class="hero-tagline">
+          Learn. Build. Deploy. Grow.
+        </div>
+
+        <p class="hero-body">
+          A student-driven technology organization bringing together passionate minds interested in Amazon Web Services, Cloud Infrastructure, Artificial Intelligence & Machine Learning, DevOps engineering, and real-world project development.
+        </p>
+
+        <div class="hero-actions">
+          <!-- Official Builder Form Link -->
+          <a href="https://forms.gle/fSu3Z82uj4r4wkHD7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+            Become an AWS Builder Member <span class="arrow-icon">→</span>
+          </a>
+          <a href="#about" class="text-link">
+            Explore the Community <span class="arrow-icon">→</span>
+          </a>
+        </div>
+
+        <div class="hero-brand-card">
+          <img src="assets/aws_gsmcoe_logo.jpeg" alt="AWS Community GSMCOE Logo Badge" class="hero-brand-img">
+          <div class="hero-brand-info">
+            <h3>Official Student Builder Chapter</h3>
+            <p>Empowering GSMCOE engineering students with cloud technology, hands-on workshops, peer collaboration, and career acceleration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         3. About the Community
+         ========================================================================== -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="swiss-grid-2">
+          <div>
+            <span class="section-label">01 / OVERVIEW</span>
+            <h2 class="section-title">About the Community</h2>
+          </div>
+          <div>
+            <p class="section-lead">
+              The AWS Student Community at Genba Sopanrao Moze College of Engineering (GSMCOE), Pune, is an active tech collective dedicated to demystifying cloud technologies and building production-grade solutions.
+            </p>
+            <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Whether you are an absolute beginner taking your first steps in cloud computing or an experienced student developer deploying microservices and AI models, our community provides the mentorship, tools, environment, and ecosystem to help you succeed.
+            </p>
+            <div style="border-left: 2px solid var(--color-border); padding-left: 1.25rem; margin-top: 2rem;">
+              <h4 style="font-family: var(--font-serif); font-style: italic; font-size: 1.25rem; margin-bottom: 0.5rem;">Our Core Focus Areas:</h4>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 1rem;">
+                <li>• Cloud Infrastructure & AWS Core Services</li>
+                <li>• Generative AI, Machine Learning & Bedrock</li>
+                <li>• Serverless Architecture & DevOps Automation</li>
+                <li>• Real-World Open Source & Industry Projects</li>
+                <li>• AWS Certification Preparation & Cloud Careers</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         4. What We Do
+         ========================================================================== -->
+    <section id="what-we-do" class="section">
+      <div class="container">
+        <span class="section-label">02 / PILLARS</span>
+        <h2 class="section-title">What We Do</h2>
+        
+        <div class="swiss-grid-4" style="margin-top: 2.5rem;">
+          <div class="swiss-card">
+            <span class="card-num">01</span>
+            <div>
+              <h3 class="card-title">Learn</h3>
+              <p class="card-desc">Participate in hands-on practical sessions, architecture deep-dives, and structured cloud learning roadmaps.</p>
+            </div>
+          </div>
+
+          <div class="swiss-card">
+            <span class="card-num">02</span>
+            <div>
+              <h3 class="card-title">Build</h3>
+              <p class="card-desc">Construct scalable, real-world web applications, serverless microservices, and AI solutions using AWS services.</p>
+            </div>
+          </div>
+
+          <div class="swiss-card">
+            <span class="card-num">03</span>
+            <div>
+              <h3 class="card-title">Share</h3>
+              <p class="card-desc">Share knowledge through lightning talks, technical write-ups, code reviews, and community workshops.</p>
+            </div>
+          </div>
+
+          <div class="swiss-card">
+            <span class="card-num">04</span>
+            <div>
+              <h3 class="card-title">Connect</h3>
+              <p class="card-desc">Network with fellow student developers, industry mentors, AWS Heroes, and cloud technology leaders.</p>
+            </div>
+          </div>
+
+          <div class="swiss-card" style="grid-column: span 1;">
+            <span class="card-num">05</span>
+            <div>
+              <h3 class="card-title">Explore</h3>
+              <p class="card-desc">Discover emerging advancements in cloud computing, DevOps tools, containers, and Generative AI.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         5. Events Section
+         ========================================================================== -->
+    <section id="events" class="section">
+      <div class="container">
+        <div class="events-header-wrapper">
+          <div>
+            <span class="section-label">03 / SCHEDULE</span>
+            <h2 class="section-title" style="margin-bottom: 0;">Community Events</h2>
+          </div>
+          
+          <div class="events-filter-bar">
+            <button class="filter-btn active" data-filter="all">All Events</button>
+            <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+            <button class="filter-btn" data-filter="past">Past</button>
+          </div>
+        </div>
+
+        <!-- JS Dynamic Container -->
+        <div id="events-container" class="events-list"></div>
+
+        <div style="margin-top: 2.5rem; text-align: right;">
+          <a href="#events" class="text-link">
+            View All Events & Archives <span class="arrow-icon">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal Dialog for Event Details -->
+    <div id="event-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+      <div class="modal-card">
+        <button id="modal-close-btn" class="modal-close-btn" aria-label="Close modal">✕</button>
+        <span id="modal-tag" class="event-tag" style="margin-bottom: 1rem; display: inline-block;">EVENT DETAILS</span>
+        <h2 id="modal-title" style="font-family: var(--font-serif); font-style: italic; font-size: clamp(1.4rem, 4vw, 2rem); margin-bottom: 1rem;">Event Title</h2>
+        <div id="modal-date" style="font-family: var(--font-serif); font-size: 1rem; font-weight: bold; margin-bottom: 0.5rem;">Date</div>
+        <div id="modal-location" style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 1.25rem;">Location</div>
+        <p id="modal-desc" style="font-size: 1rem; line-height: 1.6; border-top: 1px solid var(--color-border); padding-top: 1.25rem;">Description</p>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         6. Who Can Join
+         ========================================================================== -->
+    <section id="community" class="section">
+      <div class="container">
+        <span class="section-label">04 / AUDIENCE</span>
+        <h2 class="section-title">Who Can Join Us?</h2>
+        <p class="section-lead">
+          Our community is open to all students across all engineering branches and skill levels at GSMCOE Pune. Absolute beginners are warmly welcomed!
+        </p>
+
+        <div class="audience-grid">
+          <div class="audience-card">
+            <h4>Beginner Learners</h4>
+            <p>No prior cloud experience needed. Start with foundational concepts, cloud basics, and free-tier hands-on labs.</p>
+          </div>
+
+          <div class="audience-card">
+            <h4>Student Developers</h4>
+            <p>Gain practical experience hosting web applications, databases, microservices, and serverless backends on AWS.</p>
+          </div>
+
+          <div class="audience-card">
+            <h4>AI & Data Enthusiasts</h4>
+            <p>Experiment with Amazon Bedrock, SageMaker, Machine Learning models, and Generative AI workflows.</p>
+          </div>
+
+          <div class="audience-card">
+            <h4>Certification Aspirants</h4>
+            <p>Prepare for AWS Certified Cloud Practitioner, Solutions Architect, and Developer Associate exams with peer study groups.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         7. Why Join
+         ========================================================================== -->
+    <section class="section">
+      <div class="container">
+        <div class="swiss-grid-2">
+          <div>
+            <span class="section-label">05 / BENEFITS</span>
+            <h2 class="section-title">Why Join AWS Community?</h2>
+          </div>
+          <div>
+            <ul class="benefits-list">
+              <li>
+                <strong>Practical Cloud Learning:</strong> Move beyond theoretical textbooks into real hands-on AWS console practice.
+              </li>
+              <li>
+                <strong>Interactive Workshops:</strong> Attend free technical sessions, live code demos, and hackathons.
+              </li>
+              <li>
+                <strong>Build Portfolio Projects:</strong> Create resume-worthy projects deployed directly on cloud infrastructure.
+              </li>
+              <li>
+                <strong>Collaborative Network:</strong> Work alongside proactive student developers and campus technology leaders.
+              </li>
+              <li>
+                <strong>Career Acceleration:</strong> Unlock internships, job opportunities, and mentorship from industry professionals.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         8. Resources Section
+         ========================================================================== -->
+    <section id="resources" class="section">
+      <div class="container">
+        <span class="section-label">06 / TOOLKIT</span>
+        <h2 class="section-title">Official AWS Learning Resources</h2>
+
+        <div class="resources-grid">
+          <a href="https://docs.aws.amazon.com/" target="_blank" rel="noopener noreferrer" class="resource-card">
+            <h4>AWS Documentation →</h4>
+            <p>Official developer guides, API references, and architecture blueprints.</p>
+          </a>
+
+          <a href="https://explore.skillbuilder.aws/" target="_blank" rel="noopener noreferrer" class="resource-card">
+            <h4>AWS Skill Builder →</h4>
+            <p>Free digital training courses, learning plans, and AWS badges.</p>
+          </a>
+
+          <a href="https://workshops.aws/" target="_blank" rel="noopener noreferrer" class="resource-card">
+            <h4>AWS Workshops →</h4>
+            <p>Step-by-step practical lab tutorials maintained by AWS engineers.</p>
+          </a>
+
+          <a href="https://www.awseducate.com/" target="_blank" rel="noopener noreferrer" class="resource-card">
+            <h4>AWS Educate →</h4>
+            <p>Self-paced cloud content for students with free lab access credits.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         9. Socials & Community Channels (PROFESSIONAL ECOSYSTEM ARCHITECTURE)
+         ========================================================================== -->
+    <section id="socials" class="section">
+      <div class="container">
+        <span class="section-label">07 / ECOSYSTEM</span>
+        <h2 class="section-title">Community Channels & Platforms</h2>
+        <p class="section-lead">
+          Connect with the AWS Student Community at GSMCOE across our structured communication ecosystem. Each platform serves a distinct, dedicated purpose to support your cloud journey.
+        </p>
+
+        <div class="socials-grid">
+          <!-- 1. WHATSAPP CHANNEL -->
+          <div class="social-card-rich">
+            <div class="card-header-flex">
+              <div class="social-icon">
+                <svg class="social-svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.178L2 22l5.006-1.31A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+              </div>
+              <div>
+                <span class="badge-tag">STAY UPDATED</span>
+                <h4>WhatsApp Channel</h4>
+              </div>
+            </div>
+            <p class="purpose-statement">Official broadcast channel for the latest community updates.</p>
+            <p class="card-desc-body">
+              The best place for students who want to stay updated without missing critical announcements, registration deadlines, or new learning initiatives.
+            </p>
+            <div class="content-tags">
+              <span>Announcements</span>
+              <span>Event Alerts</span>
+              <span>Resource Info</span>
+              <span>Deadlines</span>
+            </div>
+            <a href="https://whatsapp.com/channel/0029VbEFZtVHgZWemkJt1S16" target="_blank" rel="noopener noreferrer" class="btn btn-secondary card-action-btn">
+              Follow Channel <span class="arrow-icon">→</span>
+            </a>
+          </div>
+
+          <!-- 2. WHATSAPP COMMUNITY -->
+          <div class="social-card-rich">
+            <div class="card-header-flex">
+              <div class="social-icon">
+                <svg class="social-svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.012 2c-5.506 0-9.969 4.463-9.969 9.969 0 1.76.459 3.473 1.332 4.984L2 22l5.201-1.365a9.92 9.92 0 0 0 4.811 1.234h.004c5.505 0 9.969-4.463 9.969-9.969 0-2.662-1.036-5.165-2.918-7.047A9.905 9.905 0 0 0 12.012 2zm5.795 14.475c-.244.688-1.42 1.309-1.979 1.393-.503.075-1.144.106-1.848-.118-.426-.135-.974-.316-1.674-.619-2.946-1.272-4.87-4.256-5.018-4.453-.148-.196-1.196-1.593-1.196-3.038 0-1.445.759-2.155 1.029-2.45.27-.295.59-.368.787-.368.196 0 .393.002.565.011.18.009.426-.068.664.503.245.589.835 2.037.909 2.185.074.148.123.32.025.515-.098.196-.147.319-.295.491-.148.172-.311.385-.444.517-.148.147-.303.308-.131.603.172.295.762 1.258 1.635 2.037 1.124.999 2.072 1.309 2.367 1.457.295.148.467.123.639-.074.172-.196.737-.859.933-1.154.196-.295.393-.245.663-.148.27.098 1.719.81 2.014.957.295.148.491.221.565.344.074.123.074.712-.17 1.4z"/>
+                </svg>
+              </div>
+              <div>
+                <span class="badge-tag">INTERACT & COLLABORATE</span>
+                <h4>WhatsApp Community</h4>
+              </div>
+            </div>
+            <p class="purpose-statement">Student interaction, discussion, collaboration, and doubt solving.</p>
+            <p class="card-desc-body">
+              An interactive space where members actively participate, resolve technical doubts, collaborate on builder projects, and learn together.
+            </p>
+            <div class="content-tags">
+              <span>Doubt Solving</span>
+              <span>Tech Discussions</span>
+              <span>Project Collabs</span>
+              <span>Peer Support</span>
+            </div>
+            <a href="https://chat.whatsapp.com/InhDQ6zPGBvJu3JmUHMiut" target="_blank" rel="noopener noreferrer" class="btn btn-secondary card-action-btn">
+              Join Community <span class="arrow-icon">→</span>
+            </a>
+          </div>
+
+          <!-- 3. LINKEDIN PAGE -->
+          <div class="social-card-rich">
+            <div class="card-header-flex">
+              <div class="social-icon">
+                <svg class="social-svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                </svg>
+              </div>
+              <div>
+                <span class="badge-tag">CAREERS & ACHIEVEMENTS</span>
+                <h4>LinkedIn Page</h4>
+              </div>
+            </div>
+            <p class="purpose-statement">Professional updates, opportunities, achievements, and community growth.</p>
+            <p class="card-desc-body">
+              The professional face of the community where students showcase achievements, discover career opportunities, and network with industry leaders.
+            </p>
+            <div class="content-tags">
+              <span>Internships</span>
+              <span>Student Achievements</span>
+              <span>Career Advice</span>
+              <span>Networking</span>
+            </div>
+            <a href="https://linkedin.com/company/aws-community-gsmcoe" target="_blank" rel="noopener noreferrer" class="btn btn-secondary card-action-btn">
+              Connect on LinkedIn <span class="arrow-icon">→</span>
+            </a>
+          </div>
+
+          <!-- 4. INSTAGRAM PAGE -->
+          <div class="social-card-rich">
+            <div class="card-header-flex">
+              <div class="social-icon">
+                <svg class="social-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </div>
+              <div>
+                <span class="badge-tag">ENGAGE & DISCOVER</span>
+                <h4>Instagram Page</h4>
+              </div>
+            </div>
+            <p class="purpose-statement">Community visibility, engagement, storytelling, and creative updates.</p>
+            <p class="card-desc-body">
+              A visual, engaging platform featuring student builder spotlights, event highlights, bite-sized AWS facts, and behind-the-scenes moments.
+            </p>
+            <div class="content-tags">
+              <span>Builder Spotlights</span>
+              <span>Event Reels</span>
+              <span>Cloud Facts</span>
+              <span>Highlights</span>
+            </div>
+            <a href="https://instagram.com/aws.at.gsmcoe" target="_blank" rel="noopener noreferrer" class="btn btn-secondary card-action-btn">
+              Follow on Instagram <span class="arrow-icon">→</span>
+            </a>
+          </div>
+
+          <!-- 5. YOUTUBE CHANNEL -->
+          <div class="social-card-rich">
+            <div class="card-header-flex">
+              <div class="social-icon">
+                <svg class="social-svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </div>
+              <div>
+                <span class="badge-tag">LEARN & WATCH</span>
+                <h4>YouTube Channel</h4>
+              </div>
+            </div>
+            <p class="purpose-statement">Long-form educational and community video content.</p>
+            <p class="card-desc-body">
+              Our digital video library where students watch full workshop recordings, step-by-step AWS tutorials, and technical talks at their own pace.
+            </p>
+            <div class="content-tags">
+              <span>AWS Tutorials</span>
+              <span>Workshop Archives</span>
+              <span>Tech Demos</span>
+              <span>Cloud Series</span>
+            </div>
+            <a href="https://youtube.com/@AWSGSMCOE" target="_blank" rel="noopener noreferrer" class="btn btn-secondary card-action-btn">
+              Subscribe on YouTube <span class="arrow-icon">→</span>
+            </a>
+          </div>
+
+          <!-- 6. OFFICIAL BUILDER FORM -->
+          <div class="social-card-rich enrollment-card">
+            <div class="card-header-flex">
+              <div class="social-icon">
+                <svg class="social-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div>
+                <span class="badge-tag">REGISTER AS A MEMBER</span>
+                <h4>Member Enrollment Form</h4>
+              </div>
+            </div>
+            <p class="purpose-statement">Official registration portal for student members.</p>
+            <p class="card-desc-body">
+              Register as an official AWS Builder Member to gain priority access to workshops, project teams, AWS certification study jams, and mentorship.
+            </p>
+            <div class="content-tags">
+              <span>Priority Access</span>
+              <span>Project Teams</span>
+              <span>Cert Guidance</span>
+              <span>Mentorship</span>
+            </div>
+            <a href="https://forms.gle/fSu3Z82uj4r4wkHD7" target="_blank" rel="noopener noreferrer" class="btn btn-primary card-action-btn">
+              Fill Member Form <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         10. Become an AWS Builder Member (Dedicated Lower CTA)
+         ========================================================================== -->
+    <section id="become-member" class="cta-section">
+      <div class="cta-container">
+        <h2 class="cta-title">Build something that matters.</h2>
+        <p class="cta-subtitle">
+          Join the AWS Student Community at GSMCOE Pune and start building real-world projects with cloud technology.
+        </p>
+
+        <!-- Official Builder Form Link -->
+        <a href="https://forms.gle/fSu3Z82uj4r4wkHD7" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+          Become an AWS Builder Member <span class="arrow-icon">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         11. Contact / Community Info
+         ========================================================================== -->
+    <section id="contact" class="section">
+      <div class="container">
+        <span class="section-label">08 / REACH OUT</span>
+        <h2 class="section-title">Contact & Campus Location</h2>
+
+        <div class="contact-grid">
+          <div>
+            <div class="contact-item">
+              <h4>Community Email</h4>
+              <!-- Official Email Address -->
+              <p style="font-size: 1.05rem;"><a href="mailto:awsatgsmcoe@gmail.com" class="text-link">awsatgsmcoe@gmail.com</a></p>
+            </div>
+
+            <div class="contact-item">
+              <h4>Institution & Campus</h4>
+              <p style="font-size: 1.05rem; line-height: 1.6;">
+                <strong>Genba Sopanrao Moze College of Engineering (GSMCOE)</strong><br>
+                Balewadi / Haveli, Pune, Maharashtra 411045, India.
+              </p>
+            </div>
+          </div>
+
+          <div style="border: 1px solid var(--color-border); padding: 2rem;">
+            <h4 style="font-family: var(--font-serif); font-style: italic; font-size: 1.35rem; margin-bottom: 0.75rem;">Questions or Partnership Enquiries?</h4>
+            <p style="line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.95rem;">
+              Are you a student wanting to join, a speaker interested in delivering a session, or an organization wanting to collaborate? Reach out to our organizing team directly.
+            </p>
+            <a href="mailto:awsatgsmcoe@gmail.com" class="btn btn-secondary" style="width: 100%;">
+              Send Email Message <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       12. Footer (WITH SWISS LEADERSHIP ACKNOWLEDGEMENT)
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <h2>AWS Community — GSMCOE</h2>
+        <p>Built by students. Powered by curiosity.</p>
+        
+        <!-- Official Community Leadership -->
+        <div class="footer-leadership">
+          <div class="leader-chip">
+            <span class="leader-role">AWS SBCL LEAD:</span>
+            <span class="leader-name">VAIBHAV RANE</span>
+          </div>
+          <span class="leader-sep">/</span>
+          <div class="leader-chip">
+            <span class="leader-role">AWS SBCL CO-LEAD:</span>
+            <span class="leader-name">SHRAVAN SHIDRUK</span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.75rem;">
+          © 2026 AWS Student Community at Genba Sopanrao Moze College of Engineering, Pune.
+        </p>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;">
+        <button id="pwa-install-btn" class="pwa-install-btn">📲 Install Web App</button>
+        <a href="#home" class="text-link">Back to Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
