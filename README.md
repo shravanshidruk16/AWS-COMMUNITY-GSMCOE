@@ -32,6 +32,8 @@ A professional, minimal, scalable static website and Progressive Web App (PWA) b
 ├── script.js             # Dynamic events renderer, details modal, mobile drawer & PWA
 ├── manifest.json         # Web App Manifest for PWA installation
 ├── sw.js                 # Service Worker for offline asset caching
+├── robots.txt            # Search engine crawling rules & sitemap reference
+├── sitemap.xml           # XML sitemap pointing to canonical website URL
 ├── netlify.toml          # Netlify static deployment configuration
 ├── LICENSE               # MIT License
 ├── README.md             # Project documentation

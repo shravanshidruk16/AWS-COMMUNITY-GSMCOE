@@ -614,6 +614,7 @@ img {
   padding: 1.75rem;
 }
 
+.audience-card h3,
 .audience-card h4 {
   font-family: var(--font-serif);
   font-style: italic;
@@ -658,6 +659,7 @@ img {
   background-color: #fafafa;
 }
 
+.resource-card h3,
 .resource-card h4 {
   font-family: var(--font-serif);
   font-style: italic;
@@ -864,6 +866,7 @@ img {
   margin-bottom: 0.35rem;
 }
 
+.card-header-flex h3,
 .card-header-flex h4 {
   font-family: var(--font-serif);
   font-style: italic;
@@ -993,6 +996,7 @@ img {
   margin-bottom: 1.75rem;
 }
 
+.contact-item h3,
 .contact-item h4 {
   font-family: var(--font-serif);
   font-style: italic;
