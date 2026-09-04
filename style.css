@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AWS COMMUNITY — GSMCOE (PUNE)
+   AWS COMMUNITY GSMCOE (PUNE)
    Swiss Minimalist Editorial Stylesheet
    Typography: Times New Roman (Serif), Pure B&W Palette, Full-Spreaded Header
    ========================================================================== */
@@ -488,9 +488,9 @@ img {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 700;
-  font-size: clamp(2.5rem, 7.5vw, 6.2rem);
-  line-height: 0.95;
-  letter-spacing: -1px;
+  font-size: clamp(3.2rem, 9.5vw, 8rem);
+  line-height: 0.92;
+  letter-spacing: -1.5px;
   margin-bottom: 1.25rem;
 }
 

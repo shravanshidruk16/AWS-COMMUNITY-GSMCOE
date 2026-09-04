@@ -1,5 +1,5 @@
 /**
- * AWS COMMUNITY — GSMCOE (PUNE)
+ * AWS COMMUNITY GSMCOE (PUNE)
  * Main JavaScript File (Vanilla JS)
  * Handles Dynamic Event Rendering, Filtering, Modals, Mobile Nav Drawer & PWA
  */

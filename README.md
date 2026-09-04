@@ -1,4 +1,4 @@
-# AWS Community — GSMCOE (Pune)
+# AWS Community GSMCOE (Pune)
 
 > **Learn. Build. Deploy. Grow.**
 
