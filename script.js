@@ -18,7 +18,7 @@ const EVENTS_DATA = [
   {
     id: 'event-01',
     title: 'AWS Community Launch Meetup & Orientation',
-    day: '7',
+    day: '10',
     month: 'SEP 2026',
     type: 'Community Meetup',
     status: 'upcoming',
