@@ -26,20 +26,20 @@ const EVENTS_DATA = [
     fullDesc: 'Join us for the official launch meetup of the AWS Student Builder Group at Genba Sopanrao Moze College of Engineering (GSMCOE), Pune! We will discuss cloud fundamentals, group roadmap, AWS certification roadmaps, hands-on workshops, Builder ID verification, and how you can get actively involved as a student builder.',
     time: '11:00 AM – 01:30 PM IST',
     location: 'Main Auditorium / Seminar Hall, GSMCOE Campus, Pune'
-  }
+  },
   // To add a new event, simply add an event object here with a unique `id` (e.g. 'event-02'), then push to GitHub!
-  // {
-  //   id: 'event-02',
-  //   title: 'Hands-on Cloud Fundamentals & S3/EC2 Workshop',
-  //   day: '28',
-  //   month: 'SEP 2026',
-  //   type: 'Technical Workshop',
-  //   status: 'upcoming',
-  //   shortDesc: 'Step-by-step practical workshop on launching compute instances, configuring IAM roles, and serving static assets via Amazon S3.',
-  //   fullDesc: 'An interactive hands-on lab session for beginners and project builders. Participants will create free-tier AWS accounts, configure IAM security policies, deploy Linux virtual servers on EC2, and host static web applications using Amazon Simple Storage Service (S3).',
-  //   time: '02:00 PM – 05:00 PM IST',
-  //   location: 'Computer Engineering Lab 3, GSMCOE Pune'
-  // }
+  {
+    id: 'event-02',
+    title: 'Hands-on Cloud Fundamentals & S3/EC2 Workshop',
+    day: '28',
+    month: 'SEP 2026',
+    type: 'Technical Workshop',
+    status: 'upcoming',
+    shortDesc: 'Step-by-step practical workshop on launching compute instances, configuring IAM roles, and serving static assets via Amazon S3.',
+    fullDesc: 'An interactive hands-on lab session for beginners and project builders. Participants will create free-tier AWS accounts, configure IAM security policies, deploy Linux virtual servers on EC2, and host static web applications using Amazon Simple Storage Service (S3).',
+    time: '02:00 PM  05:00 PM IST',
+    location: 'Computer Engineering Lab 3, GSMCOE Pune'
+  }
 ];
 
 function initEventsSystem() {
