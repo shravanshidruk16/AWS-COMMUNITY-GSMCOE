@@ -15,44 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
    1. Dynamic Events Data & Rendering System
    ========================================================================== */
 const EVENTS_DATA = [
-  {
-    id: 'event-01',
-    title: 'AWS Student Builder Group Launch Meetup & Orientation',
-    day: '10',
-    month: 'SEP 2026',
-    type: 'Community Meetup',
-    status: 'upcoming',
-    shortDesc: 'Kickoff session introducing the AWS Student Builder Group at GSMCOE Pune. Learn about upcoming learning tracks, workshops, builder projects, and ID verification.',
-    fullDesc: 'Join us for the official launch meetup of the AWS Student Builder Group at Genba Sopanrao Moze College of Engineering (GSMCOE), Pune! We will discuss cloud fundamentals, group roadmap, AWS certification roadmaps, hands-on workshops, Builder ID verification, and how you can get actively involved as a student builder.',
-    time: '11:00 AM – 01:30 PM IST',
-    location: 'Main Auditorium / Seminar Hall, GSMCOE Campus, Pune'
-  },
-  // To add a new event, simply add an event object here with a unique `id` (e.g. 'event-02'), then push to GitHub!
-  {
-    id: 'event-02',
-    title: 'Hands-on Cloud Fundamentals & S3/EC2 Workshop',
-    day: '28',
-    month: 'SEP 2026',
-    type: 'Technical Workshop',
-    status: 'upcoming',
-    shortDesc: 'Step-by-step practical workshop on launching compute instances, configuring IAM roles, and serving static assets via Amazon S3.',
-    fullDesc: 'An interactive hands-on lab session for beginners and project builders. Participants will create free-tier AWS accounts, configure IAM security policies, deploy Linux virtual servers on EC2, and host static web applications using Amazon Simple Storage Service (S3).',
-    time: '02:00 PM  05:00 PM IST',
-    location: 'Computer Engineering Lab 3, GSMCOE Pune'
-  },
-  {
-    id: 'event-03',
-    title: 'Introduction to AWS SBG CLUB',
-    day: '1',
-    month: 'OCT 2026',
-    type: 'Seminar Workshop',
-    status: 'upcoming',
-    shortDesc: 'Step-by-step practical workshop on launching compute instances, configuring IAM roles, and serving static assets via Amazon S3.',
-    fullDesc: 'An Introductory event which will tell in depth what will happen in this AWS SBG',
-    time: '11:00 AM - 05:00 PM IST',
-    location: 'Seminar Hall, GSMCOE, Balewadi, Pune'
-  }
-
+    {
+      id: 'event-01',
+      title: 'Introduction to AWS SBG Club',
+      day: '1',
+      month: 'OCT 2026',
+      type: 'Seminar Workshop',
+      status: 'upcoming',
+      shortDesc: 'Discover the AWS Student Builder Group, its activities, learning opportunities, projects, and how students can start their AWS journey.',
+      fullDesc: 'An introductory seminar to the AWS Student Builder Group at GSMCOE, designed to give students a complete overview of the community, its purpose, activities, and opportunities. The session will explain what AWS Student Builder Groups are, how students can participate, how to create and verify an AWS Builder Center account, and how to make the most of the AWS learning ecosystem. Students will be introduced to AWS and cloud learning pathways, hands-on workshops, technical sessions, practical labs, project-building activities, challenges, hackathons, certification guidance, curated learning resources, peer collaboration, and relevant internship and career opportunities shared through the community. The session will also introduce the official AWS Builder Center Space created for GSMCOE, where upcoming activities, announcements, resources, opportunities, and event updates will be published. Students from GSMCOE and other colleges who are interested in AWS, Cloud Computing, AI/ML, DevOps, Software Development, and emerging technologies are welcome to participate. Beginners are encouraged to attend and start their journey from the basics. The session will conclude with guidance on joining the community, following the official Builder Space and Builder profiles, and getting started with learning, building, and participating in upcoming AWS Student Builder activities.',
+      time: '11:00 AM - 1:00 PM IST',
+      location: 'Seminar Hall, GSMCOE, Balewadi, Pune'
+    }
 ];
 
 function initEventsSystem() {
