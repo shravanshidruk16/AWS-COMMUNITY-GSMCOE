@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aws-sbg-gsmcoe-v2';
+const CACHE_NAME = 'aws-sbg-gsmcoe-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -6,6 +6,8 @@ const ASSETS_TO_CACHE = [
   '/script.js',
   '/manifest.json',
   '/assets/aws_gsmcoe_logo.jpeg',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png',
   '/assets/logo.svg',
   '/assets/favicon.svg'
 ];
@@ -22,7 +24,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event - Clean Up Old Caches & Claim Clients
+// Activate Event - Clean Up Old Caches & Claim Clients Immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -34,11 +36,17 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    }).then(() => self.clients.claim())
+    }).then(() => {
+      self.clients.claim();
+      // Notify active clients that SW updated
+      return self.clients.matchAll({ type: 'window' }).then((clients) => {
+        clients.forEach((client) => client.postMessage({ type: 'SW_UPDATED' }));
+      });
+    })
   );
 });
 
-// Fetch Event - Network-First for HTML/JS, Stale-While-Revalidate for Assets
+// Fetch Event - Network-First for HTML/JS to detect updates immediately
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 

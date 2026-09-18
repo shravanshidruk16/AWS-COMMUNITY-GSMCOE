@@ -211,10 +211,22 @@ function initPwaAndNotifications() {
       navigator.serviceWorker.register('/sw.js')
         .then(reg => {
           console.log('[PWA] Service Worker registered with scope:', reg.scope);
+          // Check for service worker updates periodically
+          setInterval(() => {
+            reg.update();
+          }, 60000);
         })
         .catch(err => {
           console.warn('[PWA] Service Worker registration failed:', err);
         });
+    });
+
+    // Listen for Service Worker update messages
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data?.type === 'SW_UPDATED') {
+        console.log('[PWA] SW Updated! Fetching latest events...');
+        fetchLatestScriptAndNotify();
+      }
     });
   }
 
@@ -231,13 +243,18 @@ function initPwaAndNotifications() {
     );
   }
 
+  // Helper: Detect iOS Safari
+  function isIos() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  }
+
   let deferredPrompt;
 
   // Show banner on page load if not running in standalone mode and not dismissed in current session
   if (bannerPwa && !isStandalone() && sessionStorage.getItem('pwa_banner_closed') !== 'true') {
     setTimeout(() => {
       bannerPwa.style.display = 'flex';
-    }, 600);
+    }, 800);
   }
 
   if (footerPwaBtn) {
@@ -266,7 +283,7 @@ function initPwaAndNotifications() {
     if (bannerPwa) bannerPwa.style.display = 'none';
     if (footerPwaBtn) footerPwaBtn.textContent = '🔔 Event Notifications Active';
     
-    // Automatically take notification permission after install
+    // Automatically request notification permission after install
     requestNotificationPermission();
   });
 
@@ -283,9 +300,17 @@ function initPwaAndNotifications() {
         deferredPrompt = null;
         requestNotificationPermission();
       });
-    } else {
-      // Prompt for notification permission directly
+    } else if (isIos()) {
+      alert('📲 To install AWS SBG App on iOS:\n\n1. Tap the Share button (📤) in Safari.\n2. Scroll down and tap "Add to Home Screen".');
       requestNotificationPermission();
+    } else {
+      // Direct notification request if already installed or unsupported prompt
+      requestNotificationPermission();
+      if (isStandalone()) {
+        alert('🔔 Event notifications are active for AWS SBG App!');
+      } else {
+        alert('📲 App installation prompt ready. If not prompted, use your browser menu "Install AWS SBG GSMCOE" or "Add to Home Screen".');
+      }
     }
   };
 
@@ -308,19 +333,19 @@ function initPwaAndNotifications() {
         if (permission === 'granted') {
           console.log('[Notification] Permission granted!');
           showWelcomeNotification();
-          checkAndNotifyNewEvents();
+          fetchLatestScriptAndNotify();
         }
       });
     } else if (Notification.permission === 'granted') {
-      checkAndNotifyNewEvents();
+      fetchLatestScriptAndNotify();
     }
   }
 
   function showWelcomeNotification() {
     const title = '🎉 Welcome to AWS Student Builder Group!';
     const options = {
-      body: 'Notifications active! You will receive instant updates when new AWS events are added.',
-      icon: 'assets/aws_gsmcoe_logo.jpeg',
+      body: 'Notifications active! You will receive instant updates when new AWS events are published.',
+      icon: 'assets/icon-192.png',
       badge: 'assets/favicon.svg',
       data: { url: window.location.origin + '/#events' }
     };
@@ -332,31 +357,30 @@ function initPwaAndNotifications() {
     }
   }
 
-  // AUTOMATED EVENT NOTIFICATION ARCHITECTURE (Requirement 5)
-  // When developer updates/adds events in script.js and pushes to GitHub,
-  // returning users get notified automatically of the new events!
-  function checkAndNotifyNewEvents() {
+  // AUTOMATED LIVE EVENT NOTIFICATION ARCHITECTURE
+  // Fetches latest script.js dynamically, detects new events, and notifies users WITHOUT manual refresh!
+  function checkAndNotifyEventsFromList(eventsList) {
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
 
-    const currentEventIds = EVENTS_DATA.map(e => e.id);
+    const currentEventIds = eventsList.map(e => e.id);
     const storedIdsJson = localStorage.getItem('sbg_known_event_ids');
 
     if (storedIdsJson === null) {
-      // First visit: store initial state
+      // Initial visit: store current events without spamming notifications
       localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
       return;
     }
 
     try {
       const knownIds = JSON.parse(storedIdsJson);
-      const newEvents = EVENTS_DATA.filter(e => !knownIds.includes(e.id));
+      const newEvents = eventsList.filter(e => !knownIds.includes(e.id));
 
       if (newEvents.length > 0) {
         newEvents.forEach(event => {
           const title = `🚨 New Event: ${event.title}`;
           const options = {
             body: `${event.shortDesc}\n📅 ${event.day} ${event.month} | 📍 ${event.location}`,
-            icon: 'assets/aws_gsmcoe_logo.jpeg',
+            icon: 'assets/icon-192.png',
             badge: 'assets/favicon.svg',
             tag: `sbg-event-${event.id}`,
             data: { url: window.location.origin + '/#events' }
@@ -378,6 +402,45 @@ function initPwaAndNotifications() {
     }
   }
 
-  // Execute new event check
-  checkAndNotifyNewEvents();
+  // Live fetcher that retrieves latest script.js with cache-busting
+  function fetchLatestScriptAndNotify() {
+    // First check local in-memory data
+    checkAndNotifyEventsFromList(EVENTS_DATA);
+
+    // Then perform network fetch with timestamp to get fresh remote updates immediately
+    fetch('/script.js?v=' + Date.now())
+      .then(res => res.text())
+      .then(text => {
+        // Extract EVENTS_DATA array from script content
+        const match = text.match(/const EVENTS_DATA = (\[[\s\S]*?\]);/);
+        if (match && match[1]) {
+          try {
+            // Safe evaluation of array literal
+            const remoteEvents = (new Function('return ' + match[1]))();
+            if (Array.isArray(remoteEvents)) {
+              checkAndNotifyEventsFromList(remoteEvents);
+            }
+          } catch (err) {
+            console.warn('[Notification] Could not parse remote EVENTS_DATA:', err);
+          }
+        }
+      })
+      .catch(err => {
+        console.warn('[Notification] Network fetch failed, relying on cached data:', err);
+      });
+  }
+
+  // Initial check on load
+  fetchLatestScriptAndNotify();
+
+  // Trigger automated notification check on Window Focus & Tab Visibility Change
+  window.addEventListener('focus', fetchLatestScriptAndNotify);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      fetchLatestScriptAndNotify();
+    }
+  });
+
+  // Background Live Poll every 30 seconds to catch code updates live
+  setInterval(fetchLatestScriptAndNotify, 30000);
 }
