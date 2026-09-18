@@ -1,7 +1,7 @@
 {
-  "name": "AWS Community GSMCOE",
-  "short_name": "AWS GSMCOE",
-  "description": "Student-driven AWS & Cloud Technology Community at Genba Sopanrao Moze College of Engineering, Pune.",
+  "name": "AWS Student Builder Group - GSMCOE, PUNE",
+  "short_name": "AWS SBG GSMCOE",
+  "description": "Official AWS Student Builder Group at Genba Sopanrao Moze College of Engineering, Pune.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

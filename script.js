@@ -1,13 +1,13 @@
 /**
- * AWS COMMUNITY GSMCOE (PUNE)
+ * AWS Student Builder Group - GSMCOE, PUNE
  * Main JavaScript File (Vanilla JS)
- * Handles Dynamic Event Rendering, Filtering, Modals, Mobile Nav Drawer & PWA
+ * Handles Dynamic Event Rendering, Filtering, Modals, Mobile Nav Drawer, PWA & Automated Event Notifications
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initEventsSystem();
-  initPwaServiceWorker();
+  initPwaAndNotifications();
   initSmoothScroll();
 });
 
@@ -17,16 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
 const EVENTS_DATA = [
   {
     id: 'event-01',
-    title: 'AWS Community Launch Meetup & Orientation',
+    title: 'AWS Student Builder Group Launch Meetup & Orientation',
     day: '10',
     month: 'SEP 2026',
     type: 'Community Meetup',
     status: 'upcoming',
-    shortDesc: 'Kickoff session introducing the AWS Student Community at GSMCOE Pune. Learn about upcoming learning tracks, workshops, and builder projects.',
-    fullDesc: 'Join us for the official launch meetup of the AWS Student Community at Genba Sopanrao Moze College of Engineering (GSMCOE), Pune! We will discuss cloud fundamentals, community roadmap, AWS certification roadmaps, hands-on workshops, and how you can get actively involved as a student builder.',
+    shortDesc: 'Kickoff session introducing the AWS Student Builder Group at GSMCOE Pune. Learn about upcoming learning tracks, workshops, builder projects, and ID verification.',
+    fullDesc: 'Join us for the official launch meetup of the AWS Student Builder Group at Genba Sopanrao Moze College of Engineering (GSMCOE), Pune! We will discuss cloud fundamentals, group roadmap, AWS certification roadmaps, hands-on workshops, Builder ID verification, and how you can get actively involved as a student builder.',
     time: '11:00 AM – 01:30 PM IST',
     location: 'Main Auditorium / Seminar Hall, GSMCOE Campus, Pune'
-  },
+  }
+  // To add a new event, simply add an event object here with a unique `id` (e.g. 'event-02'), then push to GitHub!
   // {
   //   id: 'event-02',
   //   title: 'Hands-on Cloud Fundamentals & S3/EC2 Workshop',
@@ -38,30 +39,6 @@ const EVENTS_DATA = [
   //   fullDesc: 'An interactive hands-on lab session for beginners and project builders. Participants will create free-tier AWS accounts, configure IAM security policies, deploy Linux virtual servers on EC2, and host static web applications using Amazon Simple Storage Service (S3).',
   //   time: '02:00 PM – 05:00 PM IST',
   //   location: 'Computer Engineering Lab 3, GSMCOE Pune'
-  // },
-  // {
-  //   id: 'event-03',
-  //   title: 'Build on AWS: Serverless & Generative AI Workshop',
-  //   day: '12',
-  //   month: 'OCT 2026',
-  //   type: 'Builder Session',
-  //   status: 'upcoming',
-  //   shortDesc: 'Explore AWS Lambda, Amazon Bedrock, and API Gateway to build real-world intelligent applications without managing servers.',
-  //   fullDesc: 'Dive into modern serverless architecture and Generative AI on AWS. Learn how to connect Amazon Bedrock LLMs with AWS Lambda functions and API Gateway to create serverless AI assistants and microservices.',
-  //   time: '10:30 AM – 03:30 PM IST',
-  //   location: 'Advanced Computing Center, GSMCOE Pune'
-  // },
-  // {
-  //   id: 'event-04',
-  //   title: 'AWS Cloud Practitioner & Developer Study Jam',
-  //   day: '05',
-  //   month: 'AUG 2026',
-  //   type: 'Study Session',
-  //   status: 'past',
-  //   shortDesc: 'Collaborative study group session breaking down domain objectives for AWS Certified Cloud Practitioner and Solutions Architect exams.',
-  //   fullDesc: 'A peer-led study session focused on AWS architectural best practices, core cloud services, pricing models, and hands-on practice exam questions.',
-  //   time: '01:00 PM – 04:00 PM IST',
-  //   location: 'Library Conference Room, GSMCOE Pune'
   // }
 ];
 
@@ -225,9 +202,10 @@ function initSmoothScroll() {
 }
 
 /* ==========================================================================
-   4. PWA Service Worker Registration & Mobile Install Prompt
+   4. PWA Install Prompt, Notification Permissions & New Event Auto-Notifier
    ========================================================================== */
-function initPwaServiceWorker() {
+function initPwaAndNotifications() {
+  // Register Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
@@ -240,46 +218,173 @@ function initPwaServiceWorker() {
     });
   }
 
-  // PWA Install Prompt handling
-  let deferredPrompt;
   const footerPwaBtn = document.getElementById('pwa-install-btn');
   const bannerPwa = document.getElementById('pwa-install-banner');
   const bannerInstallBtn = document.getElementById('pwa-banner-install-btn');
   const bannerCloseBtn = document.getElementById('pwa-banner-close-btn');
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
+  // Helper: Check if PWA is installed or standalone
+  function checkPwaInstalled() {
+    return (
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true ||
+      localStorage.getItem('pwa_installed') === 'true'
+    );
+  }
+
+  // Hide PWA install prompt completely if installed
+  if (checkPwaInstalled()) {
+    if (bannerPwa) bannerPwa.style.display = 'none';
     if (footerPwaBtn) {
+      footerPwaBtn.textContent = '🔔 Event Notifications Active';
       footerPwaBtn.style.display = 'inline-block';
     }
 
-    // Show mobile banner on mobile viewports
-    if (bannerPwa && window.innerWidth <= 768) {
-      bannerPwa.style.display = 'flex';
+    // Automatically request notification permission if app is installed and permission is default
+    if ('Notification' in window && Notification.permission === 'default') {
+      setTimeout(() => {
+        requestNotificationPermission();
+      }, 2000);
     }
+  }
 
-    const triggerPrompt = () => {
-      if (!deferredPrompt) return;
+  let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // If app is NOT installed, show install banner popup
+    if (!checkPwaInstalled()) {
+      if (bannerPwa) {
+        bannerPwa.style.display = 'flex';
+      }
+      if (footerPwaBtn) {
+        footerPwaBtn.style.display = 'inline-block';
+        footerPwaBtn.textContent = '📲 Install App & Get Notifications';
+      }
+    }
+  });
+
+  // Listen for completed installation
+  window.addEventListener('appinstalled', () => {
+    console.log('[PWA] App installed successfully');
+    localStorage.setItem('pwa_installed', 'true');
+    if (bannerPwa) bannerPwa.style.display = 'none';
+    if (footerPwaBtn) {
+      footerPwaBtn.textContent = '🔔 Event Notifications Active';
+    }
+    // Take notification permission from user once installed
+    requestNotificationPermission();
+  });
+
+  // Action: Trigger Install + Request Notification Permission
+  const handleInstallAndNotify = () => {
+    if (deferredPrompt) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
           console.log('[PWA] User accepted install prompt');
+          localStorage.setItem('pwa_installed', 'true');
+          if (bannerPwa) bannerPwa.style.display = 'none';
+          requestNotificationPermission();
         }
         deferredPrompt = null;
-        if (bannerPwa) bannerPwa.style.display = 'none';
-        if (footerPwaBtn) footerPwaBtn.style.display = 'none';
       });
-    };
+    } else {
+      // If already installed or browser handled it, request notification permission directly
+      requestNotificationPermission();
+    }
+  };
 
-    if (footerPwaBtn) footerPwaBtn.addEventListener('click', triggerPrompt);
-    if (bannerInstallBtn) bannerInstallBtn.addEventListener('click', triggerPrompt);
-  });
+  if (bannerInstallBtn) bannerInstallBtn.addEventListener('click', handleInstallAndNotify);
+  if (footerPwaBtn) footerPwaBtn.addEventListener('click', handleInstallAndNotify);
 
   if (bannerCloseBtn && bannerPwa) {
     bannerCloseBtn.addEventListener('click', () => {
       bannerPwa.style.display = 'none';
     });
   }
+
+  // Request Notification Permission Function
+  function requestNotificationPermission() {
+    if (!('Notification' in window)) return;
+
+    if (Notification.permission === 'default') {
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          console.log('[Notification] Permission granted!');
+          showWelcomeNotification();
+          checkAndNotifyNewEvents();
+        }
+      });
+    } else if (Notification.permission === 'granted') {
+      checkAndNotifyNewEvents();
+    }
+  }
+
+  function showWelcomeNotification() {
+    const title = '🎉 Welcome to AWS Student Builder Group!';
+    const options = {
+      body: 'You will now receive instant push notifications whenever new AWS events & workshops are added!',
+      icon: 'assets/aws_gsmcoe_logo.jpeg',
+      badge: 'assets/favicon.svg',
+      data: { url: window.location.origin + '/#events' }
+    };
+
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.ready.then(reg => reg.showNotification(title, options));
+    } else {
+      new Notification(title, options);
+    }
+  }
+
+  // AUTOMATED EVENT NOTIFICATION ARCHITECTURE (Requirement 5)
+  // Compares current EVENTS_DATA in script.js against stored event IDs in localStorage.
+  // When developer adds/updates events in script.js and pushes, users get notified!
+  function checkAndNotifyNewEvents() {
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+    const currentEventIds = EVENTS_DATA.map(e => e.id);
+    const storedIdsJson = localStorage.getItem('sbg_known_event_ids');
+
+    if (storedIdsJson === null) {
+      // First visit: save initial state
+      localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
+      return;
+    }
+
+    try {
+      const knownIds = JSON.parse(storedIdsJson);
+      const newEvents = EVENTS_DATA.filter(e => !knownIds.includes(e.id));
+
+      if (newEvents.length > 0) {
+        newEvents.forEach(event => {
+          const title = `🚨 New Event: ${event.title}`;
+          const options = {
+            body: `${event.shortDesc}\n📅 ${event.day} ${event.month} | 📍 ${event.location}`,
+            icon: 'assets/aws_gsmcoe_logo.jpeg',
+            badge: 'assets/favicon.svg',
+            tag: `sbg-event-${event.id}`,
+            data: { url: window.location.origin + '/#events' }
+          };
+
+          if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.ready.then(reg => reg.showNotification(title, options));
+          } else {
+            new Notification(title, options);
+          }
+        });
+
+        // Save updated known IDs
+        localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
+      }
+    } catch (e) {
+      console.error('[Notification] Error parsing stored event IDs:', e);
+      localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
+    }
+  }
+
+  // Trigger check on startup
+  checkAndNotifyNewEvents();
 }

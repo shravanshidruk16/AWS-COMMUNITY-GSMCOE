@@ -298,19 +298,51 @@ img {
   width: 100%;
 }
 
+.header-btns-group {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.header-verify-btn {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(1rem, 1.8vw, 2.2rem);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  text-transform: uppercase;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  border: none;
+  border-left: 1px solid var(--color-border);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.header-verify-btn:hover {
+  background-color: #f2f2f2;
+  color: var(--color-text);
+  opacity: 1;
+}
+
 /* Full Edge-to-Edge Right CTA Button */
 .header-cta-btn {
   height: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 clamp(1.5rem, 2.5vw, 3rem);
+  padding: 0 clamp(1.25rem, 2vw, 2.5rem);
   background-color: var(--color-text);
   color: var(--color-bg);
   text-transform: uppercase;
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   letter-spacing: 1.2px;
   border: none;
   border-left: 1px solid var(--color-border);
