@@ -39,7 +39,20 @@ const EVENTS_DATA = [
     fullDesc: 'An interactive hands-on lab session for beginners and project builders. Participants will create free-tier AWS accounts, configure IAM security policies, deploy Linux virtual servers on EC2, and host static web applications using Amazon Simple Storage Service (S3).',
     time: '02:00 PM  05:00 PM IST',
     location: 'Computer Engineering Lab 3, GSMCOE Pune'
+  },
+  {
+    id: 'event-03',
+    title: 'Introduction to AWS SBG CLUB',
+    day: '1',
+    month: 'OCT 2026',
+    type: 'Seminar Workshop',
+    status: 'upcoming',
+    shortDesc: 'Step-by-step practical workshop on launching compute instances, configuring IAM roles, and serving static assets via Amazon S3.',
+    fullDesc: 'An Introductory event which will tell in depth what will happen in this AWS SBG',
+    time: '11:00 AM - 05:00 PM IST',
+    location: 'Seminar Hall, GSMCOE, Balewadi, Pune'
   }
+
 ];
 
 function initEventsSystem() {
