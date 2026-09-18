@@ -202,10 +202,10 @@ function initSmoothScroll() {
 }
 
 /* ==========================================================================
-   4. PWA Install Prompt, Notification Permissions & New Event Auto-Notifier
+   4. PWA Install Banner, Notification Permissions & Automated Event Notifier
    ========================================================================== */
 function initPwaAndNotifications() {
-  // Register Service Worker
+  // Service Worker Registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
@@ -223,62 +223,54 @@ function initPwaAndNotifications() {
   const bannerInstallBtn = document.getElementById('pwa-banner-install-btn');
   const bannerCloseBtn = document.getElementById('pwa-banner-close-btn');
 
-  // Helper: Check if PWA is installed or standalone
-  function checkPwaInstalled() {
+  // Helper: Check if running as installed standalone PWA
+  function isStandalone() {
     return (
       window.matchMedia('(display-mode: standalone)').matches ||
-      window.navigator.standalone === true ||
-      localStorage.getItem('pwa_installed') === 'true'
+      window.navigator.standalone === true
     );
-  }
-
-  // Hide PWA install prompt completely if installed
-  if (checkPwaInstalled()) {
-    if (bannerPwa) bannerPwa.style.display = 'none';
-    if (footerPwaBtn) {
-      footerPwaBtn.textContent = '🔔 Event Notifications Active';
-      footerPwaBtn.style.display = 'inline-block';
-    }
-
-    // Automatically request notification permission if app is installed and permission is default
-    if ('Notification' in window && Notification.permission === 'default') {
-      setTimeout(() => {
-        requestNotificationPermission();
-      }, 2000);
-    }
   }
 
   let deferredPrompt;
 
+  // Show banner on page load if not running in standalone mode and not dismissed in current session
+  if (bannerPwa && !isStandalone() && sessionStorage.getItem('pwa_banner_closed') !== 'true') {
+    setTimeout(() => {
+      bannerPwa.style.display = 'flex';
+    }, 600);
+  }
+
+  if (footerPwaBtn) {
+    footerPwaBtn.style.display = 'inline-block';
+    if (isStandalone()) {
+      footerPwaBtn.textContent = '🔔 Event Notifications Active';
+    } else {
+      footerPwaBtn.textContent = '📲 Install App & Get Notifications';
+    }
+  }
+
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
+    console.log('[PWA] beforeinstallprompt event captured');
 
-    // If app is NOT installed, show install banner popup
-    if (!checkPwaInstalled()) {
-      if (bannerPwa) {
-        bannerPwa.style.display = 'flex';
-      }
-      if (footerPwaBtn) {
-        footerPwaBtn.style.display = 'inline-block';
-        footerPwaBtn.textContent = '📲 Install App & Get Notifications';
-      }
+    if (bannerPwa && !isStandalone() && sessionStorage.getItem('pwa_banner_closed') !== 'true') {
+      bannerPwa.style.display = 'flex';
     }
   });
 
-  // Listen for completed installation
+  // Handle App Installed event
   window.addEventListener('appinstalled', () => {
     console.log('[PWA] App installed successfully');
     localStorage.setItem('pwa_installed', 'true');
     if (bannerPwa) bannerPwa.style.display = 'none';
-    if (footerPwaBtn) {
-      footerPwaBtn.textContent = '🔔 Event Notifications Active';
-    }
-    // Take notification permission from user once installed
+    if (footerPwaBtn) footerPwaBtn.textContent = '🔔 Event Notifications Active';
+    
+    // Automatically take notification permission after install
     requestNotificationPermission();
   });
 
-  // Action: Trigger Install + Request Notification Permission
+  // Action Handler: Trigger Install + Request Notification Permission
   const handleInstallAndNotify = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
@@ -287,12 +279,12 @@ function initPwaAndNotifications() {
           console.log('[PWA] User accepted install prompt');
           localStorage.setItem('pwa_installed', 'true');
           if (bannerPwa) bannerPwa.style.display = 'none';
-          requestNotificationPermission();
         }
         deferredPrompt = null;
+        requestNotificationPermission();
       });
     } else {
-      // If already installed or browser handled it, request notification permission directly
+      // Prompt for notification permission directly
       requestNotificationPermission();
     }
   };
@@ -303,10 +295,11 @@ function initPwaAndNotifications() {
   if (bannerCloseBtn && bannerPwa) {
     bannerCloseBtn.addEventListener('click', () => {
       bannerPwa.style.display = 'none';
+      sessionStorage.setItem('pwa_banner_closed', 'true');
     });
   }
 
-  // Request Notification Permission Function
+  // Notification Permission Request
   function requestNotificationPermission() {
     if (!('Notification' in window)) return;
 
@@ -326,7 +319,7 @@ function initPwaAndNotifications() {
   function showWelcomeNotification() {
     const title = '🎉 Welcome to AWS Student Builder Group!';
     const options = {
-      body: 'You will now receive instant push notifications whenever new AWS events & workshops are added!',
+      body: 'Notifications active! You will receive instant updates when new AWS events are added.',
       icon: 'assets/aws_gsmcoe_logo.jpeg',
       badge: 'assets/favicon.svg',
       data: { url: window.location.origin + '/#events' }
@@ -340,8 +333,8 @@ function initPwaAndNotifications() {
   }
 
   // AUTOMATED EVENT NOTIFICATION ARCHITECTURE (Requirement 5)
-  // Compares current EVENTS_DATA in script.js against stored event IDs in localStorage.
-  // When developer adds/updates events in script.js and pushes, users get notified!
+  // When developer updates/adds events in script.js and pushes to GitHub,
+  // returning users get notified automatically of the new events!
   function checkAndNotifyNewEvents() {
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
 
@@ -349,7 +342,7 @@ function initPwaAndNotifications() {
     const storedIdsJson = localStorage.getItem('sbg_known_event_ids');
 
     if (storedIdsJson === null) {
-      // First visit: save initial state
+      // First visit: store initial state
       localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
       return;
     }
@@ -376,15 +369,15 @@ function initPwaAndNotifications() {
           }
         });
 
-        // Save updated known IDs
+        // Save updated known event IDs
         localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
       }
     } catch (e) {
-      console.error('[Notification] Error parsing stored event IDs:', e);
+      console.error('[Notification] Error checking new events:', e);
       localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
     }
   }
 
-  // Trigger check on startup
+  // Execute new event check
   checkAndNotifyNewEvents();
 }
