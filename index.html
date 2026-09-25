@@ -843,26 +843,26 @@
       </div>
 
       <div style="display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;">
-        <button id="pwa-install-btn" class="pwa-install-btn" aria-label="Install App and Enable Notifications">📲 Install App &amp; Notify</button>
+        <button id="footer-pwa-btn" class="pwa-footer-btn" aria-label="Install App and Enable Notifications">📲 Install App &amp; Notify</button>
         <a href="#home" class="text-link" aria-label="Back to top of AWS Student Builder Group page">Back to Top ↑</a>
       </div>
     </div>
   </footer>
 
-  <!-- Floating Sleek PWA Install Banner -->
-<div id="pwa-install-banner" class="pwa-banner" role="dialog" aria-labelledby="pwa-banner-title" style="display: none;">
-  <div class="pwa-banner-content">
-    <img src="icons/icon-192.png" alt="AWS SBG Logo" class="pwa-app-icon" onError="this.style.display='none'" />
-    <div class="pwa-text-group">
-      <div id="pwa-banner-title" class="pwa-title">AWS Builder Group App</div>
-      <div class="pwa-subtitle">Get instant event & workshop alerts</div>
+  <!-- Floating Sleek PWA Install Toast -->
+  <div id="pwa-install-banner" class="pwa-banner-toast" role="dialog" aria-labelledby="pwa-banner-title" style="display: none;">
+    <div class="pwa-toast-inner">
+      <img src="assets/icon-192.png" alt="AWS SBG Icon" class="pwa-toast-icon">
+      <div class="pwa-toast-text">
+        <span id="pwa-banner-title" class="pwa-toast-title">AWS Builder Group App</span>
+        <span class="pwa-toast-subtitle">Get instant event &amp; workshop alerts</span>
+      </div>
+      <div class="pwa-toast-actions">
+        <button id="pwa-banner-install-btn" class="pwa-toast-install-btn">Install</button>
+        <button id="pwa-banner-close-btn" class="pwa-toast-close-btn" aria-label="Close notification banner">&times;</button>
+      </div>
     </div>
   </div>
-  <div class="pwa-action-group">
-    <button id="pwa-install-btn" class="pwa-install-btn">Install</button>
-    <button id="pwa-close-btn" class="pwa-close-btn" aria-label="Close">&times;</button>
-  </div>
-</div>
 
 
   <!-- Script -->

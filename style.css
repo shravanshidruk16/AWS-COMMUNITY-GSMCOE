@@ -1267,38 +1267,30 @@ img {
 }
 
 /* ==========================================================================
-   PWA Floating Install & Notification Banner Styles
+   ULTRA-SLEEK COMPACT PWA FLOATING TOAST BANNER
    ========================================================================== */
-/* ============================================================
-   ULTRA-SLEEK PWA FLOATING BANNER (COMPACT NATIVE TOAST)
-   ============================================================ */
+.pwa-banner-toast,
 .pwa-banner {
   position: fixed !important;
   bottom: 20px !important;
   left: 16px !important;
   right: 16px !important;
-  max-width: 420px !important;
+  max-width: 380px !important;
   margin: 0 auto !important;
-  z-index: 99999 !important;
-  background: rgba(15, 23, 42, 0.95) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 16px !important;
-  padding: 10px 14px !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 12px !important;
+  z-index: 999999 !important;
+  background: #09090b !important;
   color: #ffffff !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  animation: pwaSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border: 1px solid #27272a !important;
+  border-radius: 12px !important;
+  padding: 8px 12px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+  box-sizing: border-box !important;
+  animation: pwaToastSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-@keyframes pwaSlideUp {
+@keyframes pwaToastSlideUp {
   from {
-    transform: translateY(80px);
+    transform: translateY(40px);
     opacity: 0;
   }
   to {
@@ -1307,30 +1299,39 @@ img {
   }
 }
 
+.pwa-toast-inner,
 .pwa-banner-content {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-  flex: 1;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  width: 100% !important;
 }
 
+.pwa-toast-icon,
 .pwa-app-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #000;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 8px !important;
+  object-fit: cover !important;
+  flex-shrink: 0 !important;
+  border: 1px solid #3f3f46 !important;
+  background: #000000 !important;
 }
 
+.pwa-toast-text,
 .pwa-text-group {
-  min-width: 0;
-  flex: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  flex: 1 !important;
 }
 
+.pwa-toast-title,
 .pwa-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   font-size: 13px !important;
   font-weight: 700 !important;
   color: #ffffff !important;
@@ -1340,9 +1341,11 @@ img {
   line-height: 1.2 !important;
 }
 
+.pwa-toast-subtitle,
 .pwa-subtitle {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   font-size: 11px !important;
-  color: #94a3b8 !important;
+  color: #a1a1aa !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -1350,56 +1353,92 @@ img {
   margin-top: 2px !important;
 }
 
+.pwa-toast-actions,
 .pwa-action-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
 }
 
-.pwa-install-btn {
-  background: #2563eb !important;
-  color: #ffffff !important;
-  border: none !important;
-  border-radius: 20px !important;
-  padding: 6px 14px !important;
+.pwa-toast-install-btn,
+.pwa-install-action-btn {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ffffff !important;
+  border-radius: 6px !important;
+  padding: 5px 12px !important;
   font-size: 12px !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4) !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  transition: all 0.15s ease !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
 }
 
-.pwa-install-btn:hover {
-  background: #1d4ed8 !important;
-  transform: translateY(-1px) !important;
+.pwa-toast-install-btn:hover,
+.pwa-install-action-btn:hover {
+  background: #e4e4e7 !important;
+  border-color: #e4e4e7 !important;
 }
 
-.pwa-install-btn:active {
-  transform: scale(0.96) !important;
-}
-
+.pwa-toast-close-btn,
 .pwa-close-btn {
   background: transparent !important;
   border: none !important;
-  color: #94a3b8 !important;
-  font-size: 20px !important;
+  color: #71717a !important;
+  font-size: 18px !important;
   line-height: 1 !important;
-  padding: 4px !important;
+  padding: 4px 6px !important;
   cursor: pointer !important;
-  transition: color 0.2s ease !important;
+  transition: color 0.15s ease !important;
 }
 
+.pwa-toast-close-btn:hover,
 .pwa-close-btn:hover {
   color: #ffffff !important;
 }
 
+.pwa-footer-btn,
+.pwa-install-btn {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-@media (max-width: 600px) {
+.pwa-footer-btn:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+@media (max-width: 480px) {
+  .pwa-banner-toast,
   .pwa-banner {
-    left: 0.75rem;
-    right: 0.75rem;
-    bottom: 0.75rem;
-    padding: 0.85rem 1rem;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    padding: 7px 10px !important;
+  }
+  
+  .pwa-toast-title,
+  .pwa-title {
+    font-size: 12px !important;
+  }
+  
+  .pwa-toast-subtitle,
+  .pwa-subtitle {
+    font-size: 10px !important;
+  }
+  
+  .pwa-toast-install-btn {
+    padding: 4px 10px !important;
+    font-size: 11px !important;
   }
 }

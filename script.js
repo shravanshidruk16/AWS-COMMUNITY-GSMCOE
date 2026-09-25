@@ -217,10 +217,10 @@ function initPwaAndNotifications() {
     });
   }
 
-  const footerPwaBtn = document.getElementById('pwa-install-btn');
+  const footerPwaBtn = document.getElementById('footer-pwa-btn') || document.getElementById('pwa-install-btn');
   const bannerPwa = document.getElementById('pwa-install-banner');
   const bannerInstallBtn = document.getElementById('pwa-banner-install-btn');
-  const bannerCloseBtn = document.getElementById('pwa-banner-close-btn');
+  const bannerCloseBtn = document.getElementById('pwa-banner-close-btn') || document.getElementById('pwa-close-btn');
 
   // Helper: Check if running as installed standalone PWA
   function isStandalone() {
