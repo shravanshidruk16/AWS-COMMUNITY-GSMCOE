@@ -22,6 +22,18 @@
   "fullDesc": "An online community orientation session covering the complete AWS Student Builder Group roadmap at GSMCOE. Students will get a detailed overview of the activities planned for the academic year, including the formation of multiple technology-focused communities, structured AWS and cloud learning paths, emerging technology sessions, hands-on labs, industry-ready project building, project team roles and responsibilities, technical competitions, quizzes, hackathons, build challenges, certification guidance, AWS Builder Center resources, peer collaboration, project showcases, certificates and recognition, and relevant internship and career opportunities. The session will also explain how students can participate in community activities, contribute to projects, build their portfolios, collaborate with other builders, and stay updated through the official AWS SBG GSMCOE portal and community channels. The objective is to help every student understand how they can start from their current skill level and progressively learn, build, compete, and grow with the AWS SBG GSMCOE community.",
   "time": "10:00 PM - 12:00 AM IST",
   "location": "Online - Meeting link will be shared through the official AWS SBG GSMCOE community and portal"
+},
+  {
+  "id": "event-03",
+  "title": "AWS Cloud Fundamentals & Builder Center Onboarding",
+  "day": "3",
+  "month": "OCT 2026",
+  "type": "Technical Workshop",
+  "status": "upcoming",
+  "shortDesc": "Start your AWS journey by understanding cloud fundamentals, core AWS services, AWS Builder Center, and the resources available for student builders.",
+  "fullDesc": "A hands-on technical workshop designed to help students build a strong foundation in AWS and cloud computing. The session will introduce the fundamentals of cloud computing, explain the AWS global infrastructure and major cloud concepts, and provide an overview of commonly used AWS services across compute, storage, databases, networking, security, serverless, and AI. Students will also learn how to create and verify their AWS Builder Center account, explore AWS learning resources, discover hands-on labs and community opportunities, and understand how AWS services can be used to build real-world applications. The workshop will include practical demonstrations, guided exploration, beginner-friendly activities, and an introduction to the upcoming SBG GSMCOE learning paths, projects, challenges, certifications, hackathons, and technical communities. By the end of the session, students will have a clear understanding of how to begin their AWS journey and where to continue learning and building.",
+  "time": "10:00 PM - 12:00 AM IST",
+  "location": "Online - Meeting link will be shared through the official AWS SBG GSMCOE community and portal"
 }
   
 ]
