@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aws-sbg-gsmcoe-v3';
+const CACHE_NAME = 'aws-sbg-gsmcoe-v4';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -12,7 +12,82 @@ const ASSETS_TO_CACHE = [
   '/assets/favicon.svg'
 ];
 
-// Install Event - Cache Core Assets
+// Helper to generate signature for SW background comparison
+function getEventSigSW(e) {
+  return `${e.id}::${e.title || ''}::${e.day || ''}::${e.month || ''}::${e.time || ''}::${e.status || ''}::${e.shortDesc || ''}`;
+}
+
+async function checkForEventUpdatesSW() {
+  try {
+    const res = await fetch('/script.js?v=' + Date.now());
+    if (!res.ok) return;
+    const text = await res.text();
+    const match = text.match(/const EVENTS_DATA = (\[[\s\S]*?\]);/);
+    if (!match || !match[1]) return;
+
+    const events = (new Function('return ' + match[1]))();
+    if (!Array.isArray(events)) return;
+
+    const cache = await caches.open('aws-sbg-events-sig-v1');
+    const storedRes = await cache.match('/cached-event-sigs.json');
+    let knownSigs = {};
+    if (storedRes) {
+      try {
+        knownSigs = await storedRes.json();
+      } catch (e) {}
+    }
+
+    const isFirstRun = Object.keys(knownSigs).length === 0;
+    const newSigs = {};
+    const notificationsToFire = [];
+
+    events.forEach(e => {
+      const sig = getEventSigSW(e);
+      newSigs[e.id] = sig;
+
+      if (!isFirstRun) {
+        if (!knownSigs[e.id]) {
+          // Brand New Event Added!
+          notificationsToFire.push({
+            title: `🚨 New Event: ${e.title}`,
+            body: `📅 ${e.day} ${e.month} | 📍 ${e.location}\n${e.shortDesc}`,
+            tag: `sbg-event-new-${e.id}-${Date.now()}`
+          });
+        } else if (knownSigs[e.id] !== sig) {
+          // Existing Event Details Modified / Updated!
+          notificationsToFire.push({
+            title: `📢 Event Updated: ${e.title}`,
+            body: `📅 ${e.day} ${e.month} | 📍 ${e.location}\n${e.shortDesc}`,
+            tag: `sbg-event-upd-${e.id}-${Date.now()}`
+          });
+        }
+      }
+    });
+
+    // Save updated signatures into SW cache
+    const responseToStore = new Response(JSON.stringify(newSigs), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    await cache.put('/cached-event-sigs.json', responseToStore);
+
+    // Fire notifications directly from Service Worker background thread!
+    for (const item of notificationsToFire) {
+      if (self.registration && self.registration.showNotification) {
+        await self.registration.showNotification(item.title, {
+          body: item.body,
+          icon: '/assets/icon-192.png',
+          badge: '/assets/favicon.svg',
+          tag: item.tag,
+          data: { url: self.location.origin + '/#events' }
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('[SW] Event background check error:', err);
+  }
+}
+
+// Install Event - Cache Core Assets & Skip Waiting
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -30,20 +105,28 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
+          if (cache !== CACHE_NAME && cache !== 'aws-sbg-events-sig-v1') {
             console.log('[SW] Removing old cache:', cache);
             return caches.delete(cache);
           }
         })
       );
-    }).then(() => {
-      self.clients.claim();
+    }).then(async () => {
+      await self.clients.claim();
+      // Run background check on activation
+      await checkForEventUpdatesSW();
       // Notify active clients that SW updated
-      return self.clients.matchAll({ type: 'window' }).then((clients) => {
-        clients.forEach((client) => client.postMessage({ type: 'SW_UPDATED' }));
-      });
+      const clients = await self.clients.matchAll({ type: 'window' });
+      clients.forEach((client) => client.postMessage({ type: 'SW_UPDATED' }));
     })
   );
+});
+
+// Periodic Background Sync Event
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'check-new-events') {
+    event.waitUntil(checkForEventUpdatesSW());
+  }
 });
 
 // Fetch Event - Network-First for HTML/JS to detect updates immediately

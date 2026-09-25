@@ -344,48 +344,76 @@ function initPwaAndNotifications() {
     }
   }
 
+  // Helper to construct event signatures
+  function getEventSig(e) {
+    return `${e.id}::${e.title || ''}::${e.day || ''}::${e.month || ''}::${e.time || ''}::${e.status || ''}::${e.shortDesc || ''}`;
+  }
+
   // AUTOMATED LIVE EVENT NOTIFICATION ARCHITECTURE
-  // Fetches latest script.js dynamically, detects new events, and notifies users WITHOUT manual refresh!
+  // Detects both brand new events AND edits/updates to existing events!
   function checkAndNotifyEventsFromList(eventsList) {
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
 
-    const currentEventIds = eventsList.map(e => e.id);
-    const storedIdsJson = localStorage.getItem('sbg_known_event_ids');
+    const currentSigs = {};
+    eventsList.forEach(e => {
+      currentSigs[e.id] = getEventSig(e);
+    });
 
-    if (storedIdsJson === null) {
-      // Initial visit: store current events without spamming notifications
-      localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
+    const storedSigsJson = localStorage.getItem('sbg_known_event_signatures');
+
+    if (storedSigsJson === null) {
+      // First visit: store current event signatures baseline
+      localStorage.setItem('sbg_known_event_signatures', JSON.stringify(currentSigs));
       return;
     }
 
     try {
-      const knownIds = JSON.parse(storedIdsJson);
-      const newEvents = eventsList.filter(e => !knownIds.includes(e.id));
+      const knownSigs = JSON.parse(storedSigsJson);
+      const notificationsToFire = [];
 
-      if (newEvents.length > 0) {
-        newEvents.forEach(event => {
-          const title = `🚨 New Event: ${event.title}`;
+      eventsList.forEach(event => {
+        const sig = currentSigs[event.id];
+
+        if (!knownSigs[event.id]) {
+          // Brand New Event Added!
+          notificationsToFire.push({
+            title: `🚨 New Event: ${event.title}`,
+            body: `📅 ${event.day} ${event.month} | 📍 ${event.location}\n${event.shortDesc}`,
+            tag: `sbg-event-new-${event.id}-${Date.now()}`
+          });
+        } else if (knownSigs[event.id] !== sig) {
+          // Existing Event Details Modified / Updated!
+          notificationsToFire.push({
+            title: `📢 Event Updated: ${event.title}`,
+            body: `📅 ${event.day} ${event.month} | 📍 ${event.location}\n${event.shortDesc}`,
+            tag: `sbg-event-upd-${event.id}-${Date.now()}`
+          });
+        }
+      });
+
+      if (notificationsToFire.length > 0) {
+        notificationsToFire.forEach(item => {
           const options = {
-            body: `${event.shortDesc}\n📅 ${event.day} ${event.month} | 📍 ${event.location}`,
+            body: item.body,
             icon: 'assets/icon-192.png',
             badge: 'assets/favicon.svg',
-            tag: `sbg-event-${event.id}`,
+            tag: item.tag,
             data: { url: window.location.origin + '/#events' }
           };
 
           if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-            navigator.serviceWorker.ready.then(reg => reg.showNotification(title, options));
+            navigator.serviceWorker.ready.then(reg => reg.showNotification(item.title, options));
           } else {
-            new Notification(title, options);
+            new Notification(item.title, options);
           }
         });
 
-        // Save updated known event IDs
-        localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
+        // Save updated event signatures baseline
+        localStorage.setItem('sbg_known_event_signatures', JSON.stringify(currentSigs));
       }
     } catch (e) {
-      console.error('[Notification] Error checking new events:', e);
-      localStorage.setItem('sbg_known_event_ids', JSON.stringify(currentEventIds));
+      console.error('[Notification] Error checking event signatures:', e);
+      localStorage.setItem('sbg_known_event_signatures', JSON.stringify(currentSigs));
     }
   }
 
