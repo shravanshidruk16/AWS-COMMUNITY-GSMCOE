@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aws-sbg-gsmcoe-v4';
+const CACHE_NAME = 'aws-sbg-gsmcoe-v5';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -19,16 +19,17 @@ function getEventSigSW(e) {
 
 async function checkForEventUpdatesSW() {
   try {
-    const res = await fetch('/script.js?v=' + Date.now());
+    // Fetch fresh events.json bypassing all HTTP and Service Worker caches
+    const res = await fetch('/events.json?t=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+    });
+    
     if (!res.ok) return;
-    const text = await res.text();
-    const match = text.match(/const EVENTS_DATA = (\[[\s\S]*?\]);/);
-    if (!match || !match[1]) return;
-
-    const events = (new Function('return ' + match[1]))();
+    const events = await res.json();
     if (!Array.isArray(events)) return;
 
-    const cache = await caches.open('aws-sbg-events-sig-v1');
+    const cache = await caches.open('aws-sbg-events-sig-v2');
     const storedRes = await cache.match('/cached-event-sigs.json');
     let knownSigs = {};
     if (storedRes) {
@@ -37,7 +38,7 @@ async function checkForEventUpdatesSW() {
       } catch (e) {}
     }
 
-    const isFirstRun = Object.keys(knownSigs).length === 0;
+    const hasBaseline = Object.keys(knownSigs).length > 0;
     const newSigs = {};
     const notificationsToFire = [];
 
@@ -45,7 +46,7 @@ async function checkForEventUpdatesSW() {
       const sig = getEventSigSW(e);
       newSigs[e.id] = sig;
 
-      if (!isFirstRun) {
+      if (hasBaseline) {
         if (!knownSigs[e.id]) {
           // Brand New Event Added!
           notificationsToFire.push({
@@ -78,6 +79,7 @@ async function checkForEventUpdatesSW() {
           icon: '/assets/icon-192.png',
           badge: '/assets/favicon.svg',
           tag: item.tag,
+          requireInteraction: true,
           data: { url: self.location.origin + '/#events' }
         });
       }
@@ -105,7 +107,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME && cache !== 'aws-sbg-events-sig-v1') {
+          if (cache !== CACHE_NAME && cache !== 'aws-sbg-events-sig-v2') {
             console.log('[SW] Removing old cache:', cache);
             return caches.delete(cache);
           }
@@ -129,13 +131,21 @@ self.addEventListener('periodicsync', (event) => {
   }
 });
 
-// Fetch Event - Network-First for HTML/JS to detect updates immediately
+// Fetch Event Handler - Network-First for HTML/JS, NO-CACHE for events.json
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
 
-  // Network-First for script.js and HTML to ensure immediate detection of new events
+  // Never cache events.json - always force direct network request
+  if (url.pathname.includes('events.json')) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-store' }).catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Network-First for script.js and HTML to ensure immediate detection of new code
   if (url.pathname.endsWith('script.js') || url.pathname === '/' || url.pathname.endsWith('.html')) {
     event.respondWith(
       fetch(event.request)

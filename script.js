@@ -14,32 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ==========================================================================
    1. Dynamic Events Data & Rendering System
    ========================================================================== */
-const EVENTS_DATA = [
-    {
-      id: 'event-01',
-      title: 'Introduction to AWS SBG Club',
-      day: '1',
-      month: 'OCT 2026',
-      type: 'Seminar Workshop',
-      status: 'upcoming',
-      shortDesc: 'Discover the AWS Student Builder Group, its activities, learning opportunities, projects, and how students can start their AWS journey.',
-      fullDesc: 'An introductory seminar to the AWS Student Builder Group at GSMCOE, designed to give students a complete overview of the community, its purpose, activities, and opportunities. The session will explain what AWS Student Builder Groups are, how students can participate, how to create and verify an AWS Builder Center account, and how to make the most of the AWS learning ecosystem. Students will be introduced to AWS and cloud learning pathways, hands-on workshops, technical sessions, practical labs, project-building activities, challenges, hackathons, certification guidance, curated learning resources, peer collaboration, and relevant internship and career opportunities shared through the community. The session will also introduce the official AWS Builder Center Space created for GSMCOE, where upcoming activities, announcements, resources, opportunities, and event updates will be published. Students from GSMCOE and other colleges who are interested in AWS, Cloud Computing, AI/ML, DevOps, Software Development, and emerging technologies are welcome to participate. Beginners are encouraged to attend and start their journey from the basics. The session will conclude with guidance on joining the community, following the official Builder Space and Builder profiles, and getting started with learning, building, and participating in upcoming AWS Student Builder activities.',
-      time: '11:00 AM - 1:00 PM IST',
-      location: 'Seminar Hall, GSMCOE, Balewadi, Pune'
-    },
-    {
-      id: 'event-02',
-      title: 'All about AWS Builder Group - GSMCOE, Pune',
-      day: '2',
-      month: 'OCT 2026',
-      type: 'Webinar',
-      status: 'upcoming',
-      shortDesc: 'Discover the AWS Student Builder Group GSMCOE, its activities, timelines, events, hackathons, internships, AWS certifications, learning paths, and much more.',
-      fullDesc: 'An introductory online\nseminar to the AWS Student Builder Group at GSMCOE, designed to give students a complete overview of the community, its purpose, upcoming activities, events, and opportunities. The session will explain what AWS Student Builder Groups are, how students can participate, how to create and verify an AWS Builder Center account, and how to make the most of the AWS learning ecosystem. Students will get a complete overview of the activities planned by SBG GSMCOE, including technical sessions, online meetings, hands-on workshops, practical labs, structured learning paths, project-building activities, team-based industry-ready projects, challenges, hackathons, competitions, quizzes, community collaborations, AWS certification guidance, curated learning resources, peer networking, role-based project opportunities, and relevant internship and career opportunities shared through the community. The session will also introduce the planned SBG GSMCOE event roadmap and explain how students can participate in upcoming events, learning activities, projects, competitions, and community initiatives throughout the academic year. Students will be introduced to AWS, cloud computing, AI/ML, Generative AI, DevOps, software development, cybersecurity, data and analytics, and other emerging technologies through the community learning ecosystem. Beginners are encouraged to attend and start their journey from the basics. The session will also introduce the official AWS Builder Center Space created for GSMCOE, where upcoming activities, announcements, resources, opportunities, learning materials, projects, and event updates will be published. Students will receive guidance on joining the official SBG GSMCOE community, following the Builder Space and relevant Builder profiles, creating their AWS Builder identity, exploring AWS learning resources, and getting started with learning, building, collaborating, and participating in upcoming AWS Student Builder activities. Students from GSMCOE and other colleges who are interested in AWS, Cloud Computing, AI/ML, DevOps, Software Development, and emerging technologies are welcome to participate in this online session.',
-      time: '10:00 PM - 12:00 AM IST',
-      location: 'Online Webinar'
-    }
-    
+let EVENTS_DATA = [
+  {
+    id: 'event-01',
+    title: 'Introduction to AWS SBG Club',
+    day: '1',
+    month: 'OCT 2026',
+    type: 'Seminar Workshop',
+    status: 'upcoming',
+    shortDesc: 'Discover the AWS Student Builder Group, its activities, learning opportunities, projects, and how students can start their AWS journey.',
+    fullDesc: 'An introductory seminar to the AWS Student Builder Group at GSMCOE, designed to give students a complete overview of the community, its purpose, activities, and opportunities.',
+    time: '11:00 AM - 1:00 PM IST',
+    location: 'Seminar Hall, GSMCOE, Balewadi, Pune'
+  }
 ];
 
 function initEventsSystem() {
@@ -50,8 +37,18 @@ function initEventsSystem() {
 
   if (!eventsContainer) return;
 
-  // Render initial events (All)
-  renderEvents('all');
+  // Fetch events.json bypassing HTTP and SW caches
+  fetch('/events.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(res => res.json())
+    .then(data => {
+      if (Array.isArray(data) && data.length > 0) {
+        EVENTS_DATA = data;
+        renderEvents('all');
+      }
+    })
+    .catch(() => {
+      renderEvents('all');
+    });
 
   // Filter Buttons Event Listener
   filterBtns.forEach(btn => {
@@ -430,45 +427,35 @@ function initPwaAndNotifications() {
     }
   }
 
-  // Live fetcher that retrieves latest script.js with cache-busting
-  function fetchLatestScriptAndNotify() {
-    // First check local in-memory data
-    checkAndNotifyEventsFromList(EVENTS_DATA);
-
-    // Then perform network fetch with timestamp to get fresh remote updates immediately
-    fetch('/script.js?v=' + Date.now())
-      .then(res => res.text())
-      .then(text => {
-        // Extract EVENTS_DATA array from script content
-        const match = text.match(/const EVENTS_DATA = (\[[\s\S]*?\]);/);
-        if (match && match[1]) {
-          try {
-            // Safe evaluation of array literal
-            const remoteEvents = (new Function('return ' + match[1]))();
-            if (Array.isArray(remoteEvents)) {
-              checkAndNotifyEventsFromList(remoteEvents);
-            }
-          } catch (err) {
-            console.warn('[Notification] Could not parse remote EVENTS_DATA:', err);
-          }
+  // Live fetcher that retrieves fresh events.json bypassing cache completely
+  function fetchLatestEventsAndNotify() {
+    fetch('/events.json?t=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+    })
+      .then(res => res.json())
+      .then(remoteEvents => {
+        if (Array.isArray(remoteEvents)) {
+          checkAndNotifyEventsFromList(remoteEvents);
         }
       })
       .catch(err => {
-        console.warn('[Notification] Network fetch failed, relying on cached data:', err);
+        console.warn('[Notification] Fetching events.json failed, using fallback:', err);
+        checkAndNotifyEventsFromList(EVENTS_DATA);
       });
   }
 
   // Initial check on load
-  fetchLatestScriptAndNotify();
+  fetchLatestEventsAndNotify();
 
   // Trigger automated notification check on Window Focus & Tab Visibility Change
-  window.addEventListener('focus', fetchLatestScriptAndNotify);
+  window.addEventListener('focus', fetchLatestEventsAndNotify);
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
-      fetchLatestScriptAndNotify();
+      fetchLatestEventsAndNotify();
     }
   });
 
-  // Background Live Poll every 30 seconds to catch code updates live
-  setInterval(fetchLatestScriptAndNotify, 30000);
+  // Background Live Poll every 20 seconds to catch updates instantly
+  setInterval(fetchLatestEventsAndNotify, 20000);
 }
