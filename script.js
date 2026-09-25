@@ -117,7 +117,12 @@ function initEventsSystem() {
     document.getElementById('modal-title').textContent = event.title;
     document.getElementById('modal-date').textContent = `${event.day} ${event.month} • ${event.time}`;
     document.getElementById('modal-location').textContent = `📍 ${event.location}`;
-    document.getElementById('modal-desc').textContent = event.fullDesc;
+    const descEl = document.getElementById('modal-desc');
+    if (descEl) {
+      descEl.style.whiteSpace = 'pre-wrap';
+      descEl.style.wordBreak = 'break-word';
+      descEl.textContent = event.fullDesc;
+    }
     document.getElementById('modal-tag').textContent = `${event.type} (${event.status.toUpperCase()})`;
 
     modalOverlay.classList.add('active');

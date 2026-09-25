@@ -1442,3 +1442,10 @@ img {
     font-size: 11px !important;
   }
 }
+
+/* Event Modal Description Formatting (Preserves \n line breaks and numbered lists) */
+#modal-desc {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  line-height: 1.65 !important;
+}
