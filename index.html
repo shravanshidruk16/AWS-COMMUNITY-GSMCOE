@@ -849,20 +849,21 @@
     </div>
   </footer>
 
-  <!-- Floating PWA Install & Notification Popup Banner -->
-  <div id="pwa-install-banner" class="pwa-banner" role="dialog" aria-labelledby="pwa-banner-title" style="display: none;">
-    <div class="pwa-banner-container">
-      <img src="assets/icon-192.png" alt="AWS SBG App Icon" class="pwa-banner-app-icon">
-      <div class="pwa-banner-info">
-        <h4 id="pwa-banner-title">Install AWS SBG App</h4>
-        <p>Get native app experience &amp; instant notifications for new AWS community events.</p>
-      </div>
-      <div class="pwa-banner-actions">
-        <button id="pwa-banner-install-btn" class="btn btn-primary pwa-btn-install">Install App</button>
-        <button id="pwa-banner-close-btn" class="pwa-btn-dismiss" aria-label="Dismiss banner">✕</button>
-      </div>
+  <!-- Floating Sleek PWA Install Banner -->
+<div id="pwa-install-banner" class="pwa-banner" role="dialog" aria-labelledby="pwa-banner-title" style="display: none;">
+  <div class="pwa-banner-content">
+    <img src="icons/icon-192.png" alt="AWS SBG Logo" class="pwa-app-icon" onError="this.style.display='none'" />
+    <div class="pwa-text-group">
+      <div id="pwa-banner-title" class="pwa-title">AWS Builder Group App</div>
+      <div class="pwa-subtitle">Get instant event & workshop alerts</div>
     </div>
   </div>
+  <div class="pwa-action-group">
+    <button id="pwa-install-btn" class="pwa-install-btn">Install</button>
+    <button id="pwa-close-btn" class="pwa-close-btn" aria-label="Close">&times;</button>
+  </div>
+</div>
+
 
   <!-- Script -->
   <script src="script.js"></script>
